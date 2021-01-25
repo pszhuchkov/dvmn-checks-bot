@@ -49,12 +49,13 @@ def main():
                 DVMN_LONG_POLLING_URL, headers=headers,
                 params=params, timeout=91
             )
-            if response.json()['status'] == 'timeout':
-                params['timestamp'] = response.json()['timestamp_to_request']
-            elif response.json()['status'] == 'found':
-                attempt = response.json()['new_attempts'][0]
+            decoded_response = response.json()
+            if decoded_response['status'] == 'timeout':
+                params['timestamp'] = decoded_response['timestamp_to_request']
+            elif decoded_response['status'] == 'found':
+                attempt = decoded_response['new_attempts'][0]
                 send_message(bot, attempt)
-                params['timestamp'] = response.json()['last_attempt_timestamp']
+                params['timestamp'] = decoded_response['last_attempt_timestamp']
         except ConnectionError as conn_err:
             print(conn_err, file=sys.stderr)
             time.sleep(3)
