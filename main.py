@@ -6,7 +6,7 @@ import requests
 import telegram
 
 from dotenv import load_dotenv
-from requests.exceptions import ConnectionError, ReadTimeout
+from requests.exceptions import ConnectionError, ReadTimeout, HTTPError
 from textwrap import dedent
 from urllib.parse import urljoin
 
@@ -49,6 +49,7 @@ def main():
                 DVMN_LONG_POLLING_URL, headers=headers,
                 params=params, timeout=91
             )
+            response.raise_for_status()
             decoded_response = response.json()
             if decoded_response['status'] == 'timeout':
                 params['timestamp'] = decoded_response['timestamp_to_request']
