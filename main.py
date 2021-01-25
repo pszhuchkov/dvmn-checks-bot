@@ -51,6 +51,8 @@ def main():
             )
             response.raise_for_status()
             decoded_response = response.json()
+            if 'error' in decoded_response:
+                raise HTTPError(decoded_response['error'])
             if decoded_response['status'] == 'timeout':
                 params['timestamp'] = decoded_response['timestamp_to_request']
             elif decoded_response['status'] == 'found':
