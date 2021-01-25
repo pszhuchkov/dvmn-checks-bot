@@ -30,7 +30,7 @@ def send_message(bot, attempt):
     message = dedent(f'''\
         У вас проверили урок "{lesson_title}".
         
-        {current_result_text}.
+        {current_result_text}
         
         {lesson_url}
     ''')
