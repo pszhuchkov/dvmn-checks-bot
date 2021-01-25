@@ -6,7 +6,6 @@ import requests
 import telegram
 
 from dotenv import load_dotenv
-from pprint import pprint
 from requests.exceptions import ConnectionError, ReadTimeout
 from textwrap import dedent
 from urllib.parse import urljoin
@@ -56,7 +55,6 @@ def main():
                 attempt = response.json()['new_attempts'][0]
                 send_message(bot, attempt)
                 params['timestamp'] = response.json()['last_attempt_timestamp']
-                pprint(response.json())
         except ConnectionError as conn_err:
             print(conn_err, file=sys.stderr)
             time.sleep(5)
