@@ -30,12 +30,12 @@ def send_message(bot, attempt):
     message = f'У вас проверили урок "{lesson_title}".\n\n' \
               f'{current_result_text}\n\n' \
               f'{lesson_url}'
-    bot.send_message(chat_id=os.getenv('CHAT_ID'), text=message)
+    bot.send_message(chat_id=os.getenv('TG_CHAT_ID'), text=message)
 
 
 def main():
     load_dotenv()
-    bot = telegram.Bot(token=os.getenv('TELEGRAM_BOT_TOKEN'))
+    bot = telegram.Bot(token=os.getenv('TG_BOT_TOKEN'))
     params = {}
     headers = {"Authorization": os.getenv('DVMN_API_TOKEN')}
     while True:
