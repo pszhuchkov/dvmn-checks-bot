@@ -57,7 +57,7 @@ def main():
                 params['timestamp'] = response.json()['last_attempt_timestamp']
         except ConnectionError as conn_err:
             print(conn_err, file=sys.stderr)
-            time.sleep(5)
+            time.sleep(3)
         except ReadTimeout:
             time.sleep(0.001)
 
