@@ -8,6 +8,7 @@ import telegram
 from dotenv import load_dotenv
 from pprint import pprint
 from requests.exceptions import ConnectionError, ReadTimeout
+from textwrap import dedent
 from urllib.parse import urljoin
 
 
@@ -27,9 +28,14 @@ def send_message(bot, attempt):
         current_result_text = RESULT_TEXTS['negative']
     else:
         current_result_text = RESULT_TEXTS['positive']
-    message = f'У вас проверили урок "{lesson_title}".\n\n' \
-              f'{current_result_text}\n\n' \
-              f'{lesson_url}'
+    message = dedent(f'''\
+        У вас проверили урок "{lesson_title}".
+        
+        {current_result_text}.
+        
+        {lesson_url}
+    ''')
+
     bot.send_message(chat_id=os.getenv('TG_CHAT_ID'), text=message)
 
 
