@@ -48,7 +48,7 @@ def main():
         try:
             response = requests.get(
                 DVMN_LONG_POLLING_URL, headers=headers,
-                params=params, timeout=95
+                params=params, timeout=91
             )
             if response.json()['status'] == 'timeout':
                 params['timestamp'] = response.json()['timestamp_to_request']
