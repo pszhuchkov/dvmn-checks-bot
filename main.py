@@ -60,9 +60,8 @@ def main():
         except ConnectionError as conn_err:
             print(conn_err, file=sys.stderr)
             time.sleep(5)
-        except ReadTimeout as timeout_err:
-            print(timeout_err, file=sys.stderr)
-            time.sleep(5)
+        except ReadTimeout:
+            time.sleep(0.001)
 
 
 if __name__ == "__main__":
