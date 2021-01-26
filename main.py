@@ -20,7 +20,7 @@ RESULT_TEXTS = {
 }
 
 
-def send_message(bot, attempt):
+def send_message(bot, attempt, chat_id):
     lesson_title = attempt['lesson_title']
     lesson_url = urljoin(DVMN_URL, attempt['lesson_url'])
     if attempt['is_negative']:
@@ -35,11 +35,12 @@ def send_message(bot, attempt):
         {lesson_url}
     ''')
 
-    bot.send_message(chat_id=os.getenv('TG_CHAT_ID'), text=message)
+    bot.send_message(chat_id=chat_id, text=message)
 
 
 def main():
     load_dotenv()
+    chat_id = os.getenv('TG_CHAT_ID')
     bot = telegram.Bot(token=os.getenv('TG_BOT_TOKEN'))
     params = {}
     headers = {"Authorization": os.getenv('DVMN_API_TOKEN')}
@@ -57,7 +58,7 @@ def main():
                 params['timestamp'] = decoded_response['timestamp_to_request']
             elif decoded_response['status'] == 'found':
                 attempt = decoded_response['new_attempts'][0]
-                send_message(bot, attempt)
+                send_message(bot, attempt, chat_id)
                 params['timestamp'] = decoded_response['last_attempt_timestamp']
         except ConnectionError as conn_err:
             print(conn_err, file=sys.stderr)
