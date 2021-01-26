@@ -51,13 +51,13 @@ def main():
                 params=params, timeout=91
             )
             response.raise_for_status()
-            decoded_response = response.json()
-            if decoded_response['status'] == 'timeout':
-                params['timestamp'] = decoded_response['timestamp_to_request']
-            elif decoded_response['status'] == 'found':
-                attempt = decoded_response['new_attempts'][0]
+            dvmn_review = response.json()
+            if dvmn_review['status'] == 'timeout':
+                params['timestamp'] = dvmn_review['timestamp_to_request']
+            elif dvmn_review['status'] == 'found':
+                attempt = dvmn_review['new_attempts'][0]
                 send_message(bot, attempt, chat_id)
-                params['timestamp'] = decoded_response['last_attempt_timestamp']
+                params['timestamp'] = dvmn_review['last_attempt_timestamp']
         except ConnectionError as conn_err:
             print(conn_err, file=sys.stderr)
             time.sleep(3)
