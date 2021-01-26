@@ -6,7 +6,7 @@ import requests
 import telegram
 
 from dotenv import load_dotenv
-from requests.exceptions import ConnectionError, ReadTimeout, HTTPError
+from requests.exceptions import ConnectionError, ReadTimeout
 from textwrap import dedent
 from urllib.parse import urljoin
 
