@@ -64,7 +64,7 @@ def main():
             print(conn_err, file=sys.stderr)
             time.sleep(3)
         except ReadTimeout:
-            time.sleep(0.001)
+            continue
 
 
 if __name__ == "__main__":
