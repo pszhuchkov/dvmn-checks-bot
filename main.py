@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 import time
@@ -38,10 +39,24 @@ def send_message(bot, attempt, chat_id):
     bot.send_message(chat_id=chat_id, text=message)
 
 
+class TelegramLogsHandler(logging.Handler):
+
+    def __init__(self, bot, chat_id):
+        super().__init__()
+        self.bot = bot
+        self.chat_id = chat_id
+
+    def emit(self, record):
+        log_entry = self.format(record)
+        self.bot.send_message(chat_id=self.chat_id, text=log_entry)
+
+
 def main():
     load_dotenv()
     chat_id = os.getenv('TG_CHAT_ID')
     bot = telegram.Bot(token=os.getenv('TG_BOT_TOKEN'))
+    logger.addHandler(TelegramLogsHandler(bot, chat_id))
+    logger.info('Бот запущен')
     params = {}
     headers = {"Authorization": os.getenv('DVMN_API_TOKEN')}
     while True:
@@ -63,7 +78,12 @@ def main():
             time.sleep(3)
         except ReadTimeout:
             continue
+        except Exception as err:
+            logger.error('Бот упал с ошибкой:')
+            logger.error(err, exc_info=True)
 
 
 if __name__ == "__main__":
+    logger = logging.getLogger('Logger')
+    logger.setLevel(logging.INFO)
     main()
