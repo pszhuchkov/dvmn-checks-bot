@@ -20,6 +20,8 @@ RESULT_TEXTS = {
     'positive': 'Работа принята. Можно приступать к следующему уроку.'
 }
 
+logger = logging.getLogger('Logger')
+
 
 def send_message(bot, attempt, chat_id):
     lesson_title = attempt['lesson_title']
@@ -84,6 +86,5 @@ def main():
 
 
 if __name__ == "__main__":
-    logger = logging.getLogger('Logger')
     logger.setLevel(logging.INFO)
     main()
