@@ -57,6 +57,7 @@ def main():
     load_dotenv()
     chat_id = os.getenv('TG_CHAT_ID')
     bot = telegram.Bot(token=os.getenv('TG_BOT_TOKEN'))
+    logger.setLevel(logging.INFO)
     logger.addHandler(TelegramLogsHandler(bot, chat_id))
     logger.info('Бот запущен')
     params = {}
@@ -86,5 +87,4 @@ def main():
 
 
 if __name__ == "__main__":
-    logger.setLevel(logging.INFO)
     main()
